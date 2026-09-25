@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#151e20" />
+    <meta
+      name="description"
+      content="LINEBREAK — an original browser tactical FPS. Step into Kestrel, a sunlit coastal training facility."
+    />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <title>LINEBREAK — Tactical FPS</title>
+  </head>
+  <body>
+    <canvas
+      id="game"
+      aria-label="LINEBREAK first person shooting range"
+    ></canvas>
+    <div id="app"></div>
+    <div id="loading">
+      <div class="brand">L<span>/</span>B</div>
+      <p>INITIALIZING KESTREL</p>
+      <progress max="100" value="10"></progress>
+    </div>
+    <noscript
+      >This game requires JavaScript and a desktop browser with WebGL
+      2.</noscript
+    >
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

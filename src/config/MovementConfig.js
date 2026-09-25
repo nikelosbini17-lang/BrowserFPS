@@ -1,0 +1,25 @@
+// Original movement balance, in meters and seconds. Shared by local and server simulation.
+export const MOVEMENT = Object.freeze({
+  groundAcceleration: 11.5,
+  airAcceleration: 3.4,
+  forwardAirMultiplier: 0.28,
+  airSpeedCap: 1.8,
+  maxBhopSpeed: 8.8,
+  groundFriction: 6.8,
+  stopSpeed: 2.2,
+  maxGroundSpeed: 5.5,
+  maxAirSpeed: 1.8, // Cap on velocity projected onto the air-input direction, not total speed.
+  jumpVelocity: 6.1,
+  gravity: 18,
+  bhopSpeedCap: 8.8,
+  landingFriction: 2.4,
+  landingFrictionTime: 0.12,
+  airControl: 1.25,
+  counterStrafeMultiplier: 1.65,
+  jumpBufferTime: 0.085,
+  walkMultiplier: 0.55,
+  crouchMultiplier: 0.43,
+  playerRadius: 0.32,
+  standingHeight: 1.8,
+  crouchingHeight: 1.2,
+});
