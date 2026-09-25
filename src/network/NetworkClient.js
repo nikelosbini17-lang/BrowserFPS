@@ -10,8 +10,9 @@ import { WEAPONS } from "../config/WeaponConfig.js";
 import { stepMovement } from "../player/Movement.js";
 
 export function serverURL() {
-  const configured = import.meta.env.VITE_GAME_SERVER_URL;
+  const configured = import.meta.env.VITE_GAME_SERVER_URL?.trim();
   const url = new URL(configured || "/game-socket", window.location.href);
+  if (url.pathname === "/") url.pathname = "/game-socket";
   if (url.protocol === "http:") url.protocol = "ws:";
   if (url.protocol === "https:") url.protocol = "wss:";
   if (!["ws:", "wss:"].includes(url.protocol))

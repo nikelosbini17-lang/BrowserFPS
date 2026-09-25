@@ -17,7 +17,7 @@ Open http://127.0.0.1:5173. Choose **Play → Deathmatch → Quick Play → Ente
 
 **Online / Private Rooms** creates or joins a private Kestrel combat sandbox using an optional code. **Practice Range** works without a server. Tactical rounds, objectives, teams, and economy are not implemented; the menu labels this as a sandbox.
 
-Public matching is implemented on the running backend. This repository has not been deployed to an internet host. For friends on a LAN, expose the frontend using `npm run dev -- --host 0.0.0.0`, add its exact LAN origin to `ALLOWED_ORIGINS`, and visit that PC's LAN address. The Vite proxy can keep the backend on loopback.
+Public matching is implemented on the running backend. Production builds connect to the Render backend at `wss://browserfps-server.onrender.com/game-socket`. Local development uses the Vite proxy to the local server on port 3001. For friends on a LAN, expose the frontend using `npm run dev -- --host 0.0.0.0`, add its exact LAN origin to `ALLOWED_ORIGINS`, and visit that PC's LAN address. The Vite proxy can keep the backend on loopback.
 
 ## Controls
 
@@ -85,15 +85,17 @@ Copy `.env.example` to `.env` for overrides.
 
 | Variable               | Purpose                                                        |
 | ---------------------- | -------------------------------------------------------------- |
-| `VITE_GAME_SERVER_URL` | Production `wss://` URL; empty uses same-origin `/game-socket` |
+| `VITE_GAME_SERVER_URL` | Backend WebSocket URL; `.env.production` sets Render for production builds. Bare addresses use `/game-socket`; empty uses the same-origin Vite proxy during development. |
 | `VITE_DEV_MODE`        | Optional debug visuals; false for public builds                |
-| `HOST`, `PORT`         | Backend defaults: 127.0.0.1:3001                               |
+| `HOST`, `PORT`         | Backend defaults: 0.0.0.0:3001; hosting may supply `PORT`      |
 | `ALLOWED_ORIGINS`      | Exact frontend origins allowed to connect                      |
 | `MAX_PLAYERS`          | Deathmatch capacity 2–32, default 20; Tactical caps at 10      |
 | `MAX_ROOMS`            | Room count 1–128, default 32                                   |
 | `DEV_COMBAT_LOGS`      | Local SHOT / SERVER HIT / KILL diagnostics; default false      |
 
 `npm run build` produces `dist/`. Public hosting requires static frontend hosting and a WebSocket-capable HTTPS/WSS reverse proxy to the Node backend. HTTPS pages reject insecure sockets. `VITE_` values are public build-time values. The backend ignores forwarded IP headers; configure trusted proxy rate limiting for a deployment. The current per-IP concurrent socket limit is 12.
+
+The committed `.env.production` sets `VITE_GAME_SERVER_URL=wss://browserfps-server.onrender.com`. You can override it in the frontend host's build environment, then rebuild and redeploy `dist/`. On the Render backend service, set `ALLOWED_ORIGINS=https://browserfps.onrender.com` (without a trailing slash). If you already allow other frontend origins, append this origin to the comma-separated list. Include local development origins if you also want to test the public backend locally. The backend rejects unlisted origins. All multiplayer modes and reconnect attempts use the same configured socket endpoint.
 
 ## Validation
 
