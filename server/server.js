@@ -1,7 +1,11 @@
 import { GameServer } from "./GameServer.js";
+
+const PORT = Number(process.env.PORT) || 3001;
+const HOST = process.env.HOST || "0.0.0.0";
+
 const options = {
-  host: process.env.HOST || "127.0.0.1",
-  port: Number(process.env.PORT || 3001),
+  host: HOST,
+  port: PORT,
   maxRooms: Number(process.env.MAX_ROOMS || 32),
   maxPlayers: Number(process.env.MAX_PLAYERS || 20),
 };
